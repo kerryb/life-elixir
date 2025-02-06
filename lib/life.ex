@@ -23,18 +23,14 @@ defmodule Life do
   end
 
   defp create_new_cells(cells) do
-    cells
-    |> all_locations_with_cell_neighbours()
-    |> count_neighbours()
-    |> cells_to_create()
-    |> MapSet.new()
+    cells |> locations_with_neighbours() |> count_neighbours() |> cells_to_create()
   end
 
   defp neighbours(cell, cells) do
     Enum.filter(cells, &(&1 in neighbouring_coordinates(cell)))
   end
 
-  defp all_locations_with_cell_neighbours(cells) do
+  defp locations_with_neighbours(cells) do
     Enum.flat_map(cells, &neighbouring_coordinates/1)
   end
 
@@ -43,15 +39,18 @@ defmodule Life do
   end
 
   defp cells_to_create(locations_with_counts) do
-    Enum.flat_map(locations_with_counts, fn
-      {cell, 3} -> [cell]
-      _ -> []
-    end)
+    Enum.flat_map(locations_with_counts, &location_if_should_create?/1) |> MapSet.new()
+  end
+
+  defp location_if_should_create?({cell, 3}) do
+    [cell]
+  end
+
+  defp location_if_should_create?(_) do
+    []
   end
 
   def neighbouring_coordinates({x, y}) do
-    for x2 <- (x - 1)..(x + 1), y2 <- (y - 1)..(y + 1), {x, y} != {x2, y2} do
-      {x2, y2}
-    end
+    for x2 <- (x - 1)..(x + 1), y2 <- (y - 1)..(y + 1), {x, y} != {x2, y2}, do: {x2, y2}
   end
 end
