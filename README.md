@@ -1,21 +1,26 @@
 # Life
 
-**TODO: Add description**
+An implementation of [Conway’s Game of
+Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) in
+[Elixir](https://elixir-lang.org/). Partially written during a [Code
+Retreat](https://www.coderetreat.org/) I was facilitating, but not within the
+“throw your code away after 45 minutes rule!
 
-## Installation
+Models the universe as a set of cells (`{x, y}` tuples), rather than a grid.
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `life` to your list of dependencies in `mix.exs`:
+## Run the tests:
 
-```elixir
-def deps do
-  [
-    {:life, "~> 0.1.0"}
-  ]
-end
+```
+mix test
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/life>.
+## Command line runner
 
+This starts with a random set of cells, and runs until the state becomes static
+or, more likely until you get bored. Shows just enough grid to include all
+current cells, so will probably get bigger as it runs – you might want to
+reduce your terminal font size!
+
+```
+mix run runner.exs
+```
