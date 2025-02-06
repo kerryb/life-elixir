@@ -36,15 +36,8 @@ defmodule Life do
   end
 
   defp neighbouring_coordinates({x, y}) do
-    [
-      {x - 1, y - 1},
-      {x, y - 1},
-      {x + 1, y - 1},
-      {x - 1, y},
-      {x + 1, y},
-      {x - 1, y + 1},
-      {x, y + 1},
-      {x + 1, y + 1}
-    ]
+    for x2 <- (x - 1)..(x + 1), y2 <- (y - 1)..(y + 1), x2 != y2 do
+      {x2, y2}
+    end
   end
 end
