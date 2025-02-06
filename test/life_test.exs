@@ -6,5 +6,10 @@ defmodule LifeTest do
       life = Life.new([{1, 1}])
       assert MapSet.size(Life.tick(life).cells) == 0
     end
+
+    test "kills cells with one neighbour" do
+      life = Life.new([{1, 1}, {1, 2}])
+      assert MapSet.size(Life.tick(life).cells) == 0
+    end
   end
 end
