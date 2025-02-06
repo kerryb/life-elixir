@@ -11,7 +11,7 @@ defmodule Life do
   end
 
   defp keep_alive?(cell, cells) do
-    length(neighbours(cell, cells)) == 2
+    length(neighbours(cell, cells)) >= 2
   end
 
   defp neighbours(cell, cells) do
