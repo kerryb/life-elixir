@@ -7,11 +7,28 @@ defmodule Life do
   end
 
   def tick(life) do
-    Map.update!(life, :cells, fn cells -> MapSet.filter(cells, &keep_alive?(&1, life.cells)) end)
+    Map.update!(life, :cells, &update_cells/1)
+  end
+
+  defp update_cells(cells) do
+    MapSet.union(remaining_cells(cells), create_new_cells(cells))
+  end
+
+  defp remaining_cells(cells) do
+    MapSet.filter(cells, &keep_alive?(&1, cells))
   end
 
   defp keep_alive?(cell, cells) do
-    length(neighbours(cell, cells)) >= 2
+    length(neighbours(cell, cells)) in [2, 3]
+  end
+
+  defp create_new_cells(cells) do
+    cells
+    |> Enum.flat_map(&neighbouring_coordinates/1)
+    |> Enum.group_by(& &1)
+    |> Map.filter(fn {_coordinates, cells} -> length(cells) == 3 end)
+    |> Map.keys()
+    |> MapSet.new()
   end
 
   defp neighbours(cell, cells) do
