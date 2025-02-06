@@ -25,9 +25,11 @@ defmodule Life do
   defp create_new_cells(cells) do
     cells
     |> Enum.flat_map(&neighbouring_coordinates/1)
-    |> Enum.group_by(& &1)
-    |> Map.filter(fn {_coordinates, cells} -> length(cells) == 3 end)
-    |> Map.keys()
+    |> Enum.reduce(%{}, fn cell, counts -> Map.update(counts, cell, 1, &(&1 + 1)) end)
+    |> Enum.flat_map(fn
+      {cell, 3} -> [cell]
+      _ -> []
+    end)
     |> MapSet.new()
   end
 
