@@ -35,8 +35,8 @@ defmodule Life do
     Enum.filter(cells, &(&1 in neighbouring_coordinates(cell)))
   end
 
-  defp neighbouring_coordinates({x, y}) do
-    for x2 <- (x - 1)..(x + 1), y2 <- (y - 1)..(y + 1), x2 != y2 do
+  def neighbouring_coordinates({x, y}) do
+    for x2 <- (x - 1)..(x + 1), y2 <- (y - 1)..(y + 1), {x, y} != {x2, y2} do
       {x2, y2}
     end
   end
