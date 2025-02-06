@@ -3,18 +3,30 @@ defmodule LifeTest do
 
   describe "Life.tick/1" do
     test "kills a cell with no neighbours" do
-      life = Life.new([{1, 1}])
-      assert MapSet.size(Life.tick(life).cells) == 0
+      life =
+        [{1, 1}]
+        |> Life.new()
+        |> Life.tick()
+
+      assert MapSet.size(life.cells) == 0
     end
 
     test "kills cells with one neighbour" do
-      life = Life.new([{1, 1}, {1, 2}])
-      assert MapSet.size(Life.tick(life).cells) == 0
+      life =
+        [{1, 1}, {1, 2}]
+        |> Life.new()
+        |> Life.tick()
+
+      assert MapSet.size(life.cells) == 0
     end
 
     test "Leaves cells with two neighbours alive" do
-      life = Life.new([{1, 1}, {1, 2}, {1, 3}])
-      assert Life.tick(life).cells == MapSet.new([{1, 2}])
+      life =
+        [{1, 1}, {1, 2}, {1, 3}]
+        |> Life.new()
+        |> Life.tick()
+
+      assert life.cells == MapSet.new([{1, 2}])
     end
   end
 end
