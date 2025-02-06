@@ -39,15 +39,7 @@ defmodule Life do
   end
 
   defp cells_to_create(locations_with_counts) do
-    Enum.filter(locations_with_counts, &create?/1) |> MapSet.new(&elem(&1, 0))
-  end
-
-  defp create?({_cell, 3}) do
-    true
-  end
-
-  defp create?(_) do
-    false
+    Enum.filter(locations_with_counts, &(elem(&1, 1) == 3)) |> MapSet.new(&elem(&1, 0))
   end
 
   def neighbouring_coordinates({x, y}) do
