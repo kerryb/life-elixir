@@ -26,10 +26,7 @@ defmodule Life do
     cells
     |> all_locations_with_cell_neighbours()
     |> count_neighbours()
-    |> Enum.flat_map(fn
-      {cell, 3} -> [cell]
-      _ -> []
-    end)
+    |> cells_to_create()
     |> MapSet.new()
   end
 
@@ -43,6 +40,13 @@ defmodule Life do
 
   defp count_neighbours(locations) do
     Enum.reduce(locations, %{}, fn cell, counts -> Map.update(counts, cell, 1, &(&1 + 1)) end)
+  end
+
+  defp cells_to_create(locations_with_counts) do
+    Enum.flat_map(locations_with_counts, fn
+      {cell, 3} -> [cell]
+      _ -> []
+    end)
   end
 
   def neighbouring_coordinates({x, y}) do
