@@ -13,7 +13,7 @@ defmodule Runner do
 
     if new_generation != old_generation do
       IEx.Helpers.clear()
-      IO.puts(Grid.render(new_generation))
+      IO.puts(new_generation |> Grid.new() |> Grid.to_string("◼︎", " "))
       Process.sleep(100)
       run_until_stable(new_generation)
     end
