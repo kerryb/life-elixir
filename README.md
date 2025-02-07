@@ -24,3 +24,10 @@ reduce your terminal font size!
 ```
 mix run runner.exs
 ```
+
+## Web runner
+
+There’s also a Phoenix LiveView application in a [separate
+project](https://github.com/kerryb/life-elixir-gui), which imports this project
+as a dependency and runs the same code but displayed in a browser instead of
+the terminal.
