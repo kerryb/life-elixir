@@ -1,20 +1,5 @@
 defmodule LifeTest do
-  use ExUnit.Case
-
-  describe "Life.neighbouring_coordinates/1" do
-    test "returns all coordinates one away in all directions" do
-      assert Enum.sort(Life.neighbouring_coordinates({10, 20})) == [
-               {9, 19},
-               {9, 20},
-               {9, 21},
-               {10, 19},
-               {10, 21},
-               {11, 19},
-               {11, 20},
-               {11, 21}
-             ]
-    end
-  end
+  use ExUnit.Case, async: true
 
   describe "Life.tick/1" do
     test "kills a cell with no neighbours" do

@@ -4,6 +4,7 @@ defmodule Life do
 
   Models living cells as a set of `{x, y}` coordinates.
   """
+  alias Life.Neighbours
   @enforce_keys [:cells]
   defstruct [:cells]
 
@@ -39,11 +40,11 @@ defmodule Life do
   end
 
   defp neighbours(cell, cells) do
-    Enum.filter(cells, &(&1 in neighbouring_coordinates(cell)))
+    Enum.filter(cells, &(&1 in Neighbours.find(cell)))
   end
 
   defp locations_with_neighbours(cells) do
-    Enum.flat_map(cells, &neighbouring_coordinates/1)
+    Enum.flat_map(cells, &Neighbours.find/1)
   end
 
   defp count_neighbours(locations) do
@@ -52,12 +53,5 @@ defmodule Life do
 
   defp cells_to_create(locations_with_counts) do
     Enum.filter(locations_with_counts, &(elem(&1, 1) == 3)) |> MapSet.new(&elem(&1, 0))
-  end
-
-  @doc """
-  Find the coordinates of potential neighbours of a cell.
-  """
-  def neighbouring_coordinates({x, y}) do
-    for x2 <- (x - 1)..(x + 1), y2 <- (y - 1)..(y + 1), {x, y} != {x2, y2}, do: {x2, y2}
   end
 end

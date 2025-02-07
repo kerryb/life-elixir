@@ -1,6 +1,6 @@
 defmodule Life.GridTest do
   alias Life.Grid
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   describe "Life.Grid.new/1" do
     test "converts a list of cells to a two-dimensional array just covering all cells" do
