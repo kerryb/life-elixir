@@ -1,4 +1,16 @@
 defmodule Life.Grid do
+  @moduledoc """
+  Converts a `Life` struct to a two-dimansional array (list of lists).
+  """
+
+  @doc """
+  Given a `Life` struct, return a list of rows, where each row is a list of
+  booleans indicating whether a live cell exists at that point.
+
+  Because the game is played on an infinite grid, the returned array only
+  covers the minimum area necessary to include all cells, rather than starting
+  at [0, 0].
+  """
   def new(life) do
     to_grid(life.cells, min_max_x(life.cells), min_max_y(life.cells))
   end
@@ -19,6 +31,10 @@ defmodule Life.Grid do
     Enum.map(min_x..max_x, &MapSet.member?(cells, {&1, y}))
   end
 
+  @doc """
+  Render a grid as a string, using the supplied characters to represent live
+  cells and empty spaces.
+  """
   def to_string(grid, cell_marker, blank_marker) do
     Enum.map_join(grid, "\n", &render_row(&1, cell_marker, blank_marker)) <> "\n"
   end

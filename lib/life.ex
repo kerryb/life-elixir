@@ -1,11 +1,23 @@
 defmodule Life do
+  @moduledoc """
+  The core implementation of the game.
+
+  Models living cells as a set of `{x, y}` coordinates.
+  """
   @enforce_keys [:cells]
   defstruct [:cells]
 
+  @doc """
+  Create a new `Life` struct with the cells provided.
+  """
   def new(cells) do
     %__MODULE__{cells: MapSet.new(cells)}
   end
 
+  @doc """
+  Run one iteration of life, and return a new struct with the updated state of
+  the universe.
+  """
   def tick(life) do
     Map.update!(life, :cells, &update_cells/1)
   end
@@ -42,6 +54,9 @@ defmodule Life do
     Enum.filter(locations_with_counts, &(elem(&1, 1) == 3)) |> MapSet.new(&elem(&1, 0))
   end
 
+  @doc """
+  Find the coordinates of potential neighbours of a cell.
+  """
   def neighbouring_coordinates({x, y}) do
     for x2 <- (x - 1)..(x + 1), y2 <- (y - 1)..(y + 1), {x, y} != {x2, y2}, do: {x2, y2}
   end

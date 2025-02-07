@@ -1,4 +1,9 @@
 defmodule Runner do
+  @moduledoc """
+  A wrapper to run the game in a terminal.
+
+  The simplest way to run it is with `mix run runner.exs`.
+  """
   alias Life.Grid
 
   def run do
