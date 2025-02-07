@@ -1,4 +1,7 @@
 defmodule Life do
+  @survival_neighbour_counts [2, 3]
+  @birth_neighbour_count 3
+
   @moduledoc """
   The core implementation of the game.
 
@@ -32,7 +35,7 @@ defmodule Life do
   end
 
   defp keep_alive?(cell, cells) do
-    length(neighbours(cell, cells)) in [2, 3]
+    length(neighbours(cell, cells)) in @survival_neighbour_counts
   end
 
   defp create_new_cells(cells) do
@@ -52,6 +55,10 @@ defmodule Life do
   end
 
   defp cells_to_create(locations_with_counts) do
-    Enum.filter(locations_with_counts, &(elem(&1, 1) == 3)) |> MapSet.new(&elem(&1, 0))
+    Enum.filter(locations_with_counts, &new_cell_born?/1) |> MapSet.new(&elem(&1, 0))
+  end
+
+  defp new_cell_born?({_cell, count}) do
+    count == @birth_neighbour_count
   end
 end
