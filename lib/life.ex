@@ -39,7 +39,7 @@ defmodule Life do
   end
 
   defp create_new_cells(cells) do
-    cells |> locations_with_neighbours() |> count_neighbours() |> cells_to_create()
+    cells |> locations_with_neighbours() |> Enum.frequencies() |> cells_to_create()
   end
 
   defp neighbours(cell, cells) do
@@ -48,10 +48,6 @@ defmodule Life do
 
   defp locations_with_neighbours(cells) do
     Enum.flat_map(cells, &Neighbours.find/1)
-  end
-
-  defp count_neighbours(locations) do
-    Enum.reduce(locations, %{}, fn cell, counts -> Map.update(counts, cell, 1, &(&1 + 1)) end)
   end
 
   defp cells_to_create(locations_with_counts) do
